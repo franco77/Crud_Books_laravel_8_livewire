@@ -25,18 +25,15 @@
                             </div>
                         </div>
                     </div>
+
+                   
+
                     <div class="form-group">
-                        <label for="image"></label>
-                        <div class="input-group mb-3">
-                            <div class="custom-file">
-                                <input wire:model="image" type="file" class="custom-file-input" id="image" aria-describedby="inputGroupFileAddon01">
-                                <label class="custom-file-label" for="image">Seleccione una Imagen</label>
-                            </div>
-                        </div>
-                        @if ($image)
-                        <img src="{{ $image->temporaryUrl() }}" class="img-thumbnail" width="100">
-                        @endif
-                        @error('image') <span class="error text-danger">{{ $message }}</span> @enderror
+                        <div class="custom-file">
+                        <input wire:model="image" type="file" class="custom-file-input" id="image">
+                        <label class="custom-file-label" for="imgInp">Choose file</label>
+                        </div>@error('image') <span class="error text-danger">{{ $message }}</span> @enderror
+                       
                     </div>
 
                     <div class="row">

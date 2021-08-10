@@ -44,7 +44,6 @@
     </script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-
 <script src="{{ asset('libs/select2/dist/js/select2.js') }}" defer></script>
 <link href="{{ asset('libs/select2/dist/css/select2.min.css') }}" rel="stylesheet">
 <link href="{{ asset('libs/select2/dist/css/select2-bootstrap4.min.css') }}" rel="stylesheet">
@@ -53,6 +52,7 @@
     $('.select2').select2({
         theme: 'bootstrap4',
     });
+
 });
 </script>
 

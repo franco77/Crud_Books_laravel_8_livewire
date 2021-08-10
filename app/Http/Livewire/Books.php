@@ -16,6 +16,7 @@ class Books extends Component
     public $selected_id, $keyWord, $code, $name, $image, $author, $price, $year, $description, $n_pages, $format_b, $editorial;
     public $updateMode = false;
 	public $deleteId = '';
+	public $perPage = 10;
 
     public function render()
     {
@@ -32,7 +33,7 @@ class Books extends Component
 						->orWhere('n_pages', 'LIKE', $keyWord)
 						->orWhere('format_b', 'LIKE', $keyWord)
 						->orWhere('editorial', 'LIKE', $keyWord)
-						->paginate(10),
+						->paginate($this->perPage),
 					
 						
         ]);
@@ -63,7 +64,7 @@ class Books extends Component
         $this->validate([
 		'code' => 'required',
 		'name' => 'required',
-		'image' => 'required',
+		'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 		'author' => 'required',
 		'price' => 'required',
 		'year' => 'required',
@@ -72,7 +73,7 @@ class Books extends Component
 		'format_b' => 'required',
 		'editorial' => 'required',
         ]);
-
+		
 		$name = md5($this->image . microtime()).'.'.$this->image->extension();
 		$this->image->storeAs('files', $name);
 
@@ -110,7 +111,8 @@ class Books extends Component
 		$this->format_b = $record-> format_b;
 		$this->editorial = $record-> editorial;
 		
-        $this->updateMode = true;
+		$this->updateMode = true;
+        
     }
 
     public function update()
@@ -118,7 +120,7 @@ class Books extends Component
         $this->validate([
 		'code' => 'required',
 		'name' => 'required',
-		'image' => 'required|image|mimes:jpg,jpeg,png,svg,gif|max:2048',
+		'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 		'author' => 'required',
 		'price' => 'required',
 		'year' => 'required',
@@ -128,12 +130,15 @@ class Books extends Component
 		'editorial' => 'required',
         ]);
 
+		$name = md5($this->image . microtime()).'.'.$this->image->extension();
+		$this->image->storeAs('files', $name);
+		
         if ($this->selected_id) {
 			$record = Book::find($this->selected_id);
             $record->update([ 
 			'code' => $this-> code,
 			'name' => $this-> name,
-			'image' => $this-> image,
+			'image' => $name,
 			'author' => $this-> author,
 			'price' => $this-> price,
 			'year' => $this-> year,
